@@ -160,19 +160,22 @@ public class Reminder {
 
     public static void main(String args[]) throws InterruptedException {
         System.out.println("About to schedule task.");
-        Reminder.port = 3001;
+        Reminder.port = 3002;
 
-        int[] distArray={12,2,6,1,3,3,1,4,5,5,6,2,4,4,2,8,9,1,7,3,5,1,3,10,12,5,5,4,7,2};
+        //int[] distArray={12,2,6,1,3,3,1,4,5,5,6,2,4,4,2,8,9,1,7,3,5,1,3,10,12,5,5,4,7,2};
+        int[] distArray={15,1,16,2,5,5,2,14,5,4,14,3,5,4,3,16,15,2,14,4,16,4,2,14,15,1,5,5,16,3};
         int deleayBetweenQueries=60;
         int duration=60;
         int delay;
         int j=0;
-        boolean useLearning=true;
+        boolean useLearning=false;
         for(int i=0;i<distArray.length/2;i++){
             delay=deleayBetweenQueries*i;
             new ReminderWrapper(delay, duration, distArray[j], useLearning, true);
             new ReminderWrapper(delay, duration, distArray[++j], useLearning, false);
-            new Learning(i + 1,delay);
+            if(i > 0 && useLearning){
+                new Learning(i ,delay);
+            }
             j++;
         }
 
